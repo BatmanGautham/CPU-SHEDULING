@@ -1,0 +1,95 @@
+#include<stdio.h>
+int main()
+{
+  int n,i,j,temp;
+  
+  printf("\n\nSJF SHEDULING\n");
+  printf("\nEnter the number of process : ");
+  scanf("%d",&n);
+ 
+  int BT[n],TAT[n],WT[n],P[n];
+ 
+  printf("\nEnter the Burst Time\n");
+  for(i=0;i<n;i++)
+  {
+   printf("BT of P%d : ", i);
+   scanf("%d",&BT[i]);
+   P[i] = i;
+  }
+  
+  // sorting process according to BT
+
+ for(i=0;i<n;i++)
+  {
+   for(j=i+1;j<n;j++)
+   {
+    if(BT[i] > BT[j])
+    {
+     //swap P BT
+     temp = BT[i];
+     BT[i] = BT[j];
+     BT[j] = temp;
+        
+     temp = P[i];
+     P[i] = P[j];
+     P[j] = temp;
+    }
+   }
+  }
+ 
+  
+  TAT[0] = BT[0]; // Since no arival time
+ 
+  float sumTAT=0,sumWT=0;
+    
+  for(i=1;i<n;i++) // Turn Around Time
+  {
+   TAT[i] = TAT[i-1]+BT[i];
+   
+   sumTAT =sumTAT + TAT[i]; // For total TAT
+  }
+ 
+  for(i=0;i<n;i++) // Waiting Time
+  {
+   WT[i] = TAT[i] - BT[i];
+   
+   sumWT = sumWT + WT[i]; // For total WT
+  }
+ 
+ printf("\n%f %f\n",sumTAT,sumWT);
+ 
+ float avgTAT = sumTAT/n;
+ float avgWT = sumWT/n;
+  
+  printf("\n\nGANTH CHART\n************\n");
+  
+  for(i=0;i<n;i++) // TOP BORDER
+  {
+   printf("_____");
+  }
+  
+  printf("\n|");
+  for(i=0;i<n;i++)
+  {
+   printf(" P%d |",P[i]);
+  }
+  
+  printf("\n");   // BOTTOM BORDER
+  for(i=0;i<n;i++)
+  {
+   printf("_____");
+  }
+  
+  printf("\n0    ");  // TIME
+  for(i=0;i<n;i++)
+  {
+   printf("%d   ",TAT[i]);
+  }
+
+  printf("\n\n");
+  
+  printf("\nAverage Turn Around Time : %.2f",avgTAT);
+  printf("\nAverage Waiting Time : %.2f",avgWT);
+  printf("\n\n");
+  
+}
