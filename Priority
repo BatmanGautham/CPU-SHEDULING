@@ -24,7 +24,7 @@ int main()
    scanf("%d",&Prio[i]);
   }
   
-  // sorting process according to BT
+  // sorting process according to Priority 
 
  for(i=0;i<n;i++)
   {
